@@ -37,7 +37,12 @@ After handling the action, the store should publish the event to its descendant 
 Example store implementation in capsid.js:
 
 ```js
-const { component, on, notifies } = require('capsid')
+const {
+  component,
+  on,
+  notifies,
+  emits
+} = capsid
 
 @component('store')
 class Store {
@@ -64,17 +69,17 @@ class Store {
 }
 
 @component('plus-button')
-class Button {
+class PlusButton {
   @on.click
   @emits('increment')
   increment () {}
 }
 
 @component('minus-button')
-class Button {
+class MinusButton {
   @on.click
   @emits('decrement')
-  increment () {}
+  decrement () {}
 }
 
 @component('count-label')
@@ -94,9 +99,18 @@ class Label {
 </body>
 ```
 
+See [the working example](https://codepen.io/kt3k/pen/JOxZJb) in codepen.io.
+
 In this example, `Store` implements two actions `increment` and `decrement` and it publishes `update` event to its descendant nodes that have `store-observer` class. In this example, having `store-observer` means the subscription to the store state.
+
+# Examples
+
+- [capsidjs/todomvc][]
+  - [TodoMVC][] implementation in Evex and capsid.js.
 
 [Flux]: https://facebook.github.io/flux/
 [FSA]: https://github.com/acdlite/flux-standard-action
 [DOM Events]: https://en.wikipedia.org/wiki/DOM_events
 [capsid.js]: https://github.com/capsidjs/capsid
+[capsidjs/todomvc]: https://github.com/capsidjs/todomvc
+[TodoMVC]: http://todomvc.com/
