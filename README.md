@@ -37,23 +37,61 @@ After handling the action, the store should publish the event to its descendant 
 Example store implementation in capsid.js:
 
 ```js
+const { component, on, notifies } = require('capsid')
+
+@component('store')
 class Store {
   constructor () {
     this.count = 0
   }
 
   @on('increment')
-  @notifies('update', '.store-observer')
   increment () {
     this.count++
+    this.update()
   }
 
   @on('decrement')
-  @notifies('update', '.store-observer')
   decrement () {
     this.count--
+    this.update()
+  }
+
+  @notifies('update', '.store-observer')
+  update () {
+    return this.count
   }
 }
+
+@component('plus-button')
+class Button {
+  @on.click
+  @emits('increment')
+  increment () {}
+}
+
+@component('minus-button')
+class Button {
+  @on.click
+  @emits('decrement')
+  increment () {}
+}
+
+@component('count-label')
+class Label {
+  @on('update')
+  update ({ detail: count }) {
+    this.el.textContent = count
+  }
+}
+```
+
+```html
+<body class="store">
+  <button class="plus-button">+</button>
+  <button class="minus-button">-</button>
+  <p class="store-observer count-label">0</p>
+</body>
 ```
 
 In this example, `Store` implements two actions `increment` and `decrement` and it publishes `update` event to its descendant nodes that have `store-observer` class. In this example, having `store-observer` means the subscription to the store state.
@@ -61,3 +99,4 @@ In this example, `Store` implements two actions `increment` and `decrement` and 
 [Flux]: https://facebook.github.io/flux/
 [FSA]: https://github.com/acdlite/flux-standard-action
 [DOM Events]: https://en.wikipedia.org/wiki/DOM_events
+[capsid.js]: https://github.com/capsidjs/capsid
