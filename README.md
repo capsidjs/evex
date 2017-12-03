@@ -24,7 +24,7 @@ An action-event should be an instance of CustomEvent. Action-event's name corres
 
 ## Dispatching action-event
 
-In Evex, there is no explicit dispatcher. Instead, the event bubbling mechanism works as the dispatcher. When an action is needed, the action-event is dispatched at the DOM element which the user interacted. The action-event bubbles up in the tree. The first parent node which knows the action's type catches it. This node is Store in Evex and this whole process is Dispatcher in Evex.
+In Evex, there is no explicit dispatcher. Instead, the event bubbling mechanism works as the dispatcher. When an action is needed, the action-event is dispatched at the DOM element which the user interacted. The action-event bubbles up in the tree. The first parent node which knows the action's type catches it. This node is Store in Evex and this whole process works as Dispatcher in Evex.
 
 ## Store in Evex
 
