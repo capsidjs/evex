@@ -1,0 +1,27 @@
+{
+  "name": "evex",
+  "version": "0.1.0",
+  "description": "Evex is a pattern to realize the Flux design pattern by means of DOM Events",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo ok"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/capsidjs/evex.git"
+  },
+  "keywords": [
+    "flux",
+    "event",
+    "events",
+    "dom",
+    "capsid",
+    "capsidjs"
+  ],
+  "author": "Yoshiya Hinosawa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/capsidjs/evex/issues"
+  },
+  "homepage": "https://github.com/capsidjs/evex#readme"
+}
