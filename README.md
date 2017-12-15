@@ -1,5 +1,8 @@
 # Evex v0.1.0
 
+[![Build Status](https://travis-ci.org/capsidjs/evex.svg?branch=master)](https://travis-ci.org/capsidjs/evex)
+[![codecov](https://codecov.io/gh/capsidjs/evex/branch/master/graph/badge.svg)](https://codecov.io/gh/capsidjs/evex)
+
 Evex is a pattern to realize the [Flux][] design pattern by means of [DOM Events][].
 
 Evex is also a tool for building Evex pattern with [capsid.js].
