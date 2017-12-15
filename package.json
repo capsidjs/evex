@@ -7,6 +7,7 @@
     "clean": "rimraf dist",
     "test": "kocha --require babel-register --require ./src/__tests__/helper src/__tests__/*.js",
     "cov": "nyc --reporter=lcov --reporter=text-summary npm test",
+    "codecov": "npm run cov && codecov",
     "dist": "bili --format umd src/index.js",
     "lint": "standard",
     "fix": "standard --fix"
@@ -37,6 +38,7 @@
     "bili": "^0.19.0",
     "capsid": "^0.18.3",
     "chai": "^4.1.2",
+    "codecov": "^3.0.0",
     "domino": "^2.0.0",
     "genel": "^1.1.1",
     "kocha": "^1.9.0",
