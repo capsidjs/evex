@@ -2,6 +2,8 @@
 
 Evex is a pattern to realize the [Flux][] design pattern by means of [DOM Events][].
 
+Evex is also a tool for building Evex pattern with [capsid.js].
+
 # Explanation
 
 In Evex, an event object works as `Action` in Flux pattern. Triggering an event on a DOM element corresponds to `dispatch`ing an action in Flux. The bubbling mechanism works as `Dispatcher` in Flux. The parent node which handles the bubbled events (actions) corresponds to `Store`. After handling events (actions), stores change their states and dispatch `update` events back to `View`. These steps consists the Flux loop.
@@ -102,6 +104,51 @@ class Label {
 See [the working example](https://codepen.io/kt3k/pen/JOxZJb) in codepen.io.
 
 In this example, `Store` implements two actions `increment` and `decrement` and it publishes `update` event to its descendant nodes that have `store-observer` class. In this example, having `store-observer` means the subscription to the store state.
+
+# Evex as a tool
+
+## :cd: Install
+
+    npm install evex
+
+## Usage
+
+First create the store with `@store` decorator`. The store store need to be a capsid component as well.
+
+```js
+const { component } = require('capsid')
+const { store } = require('evex')
+
+@component
+@store
+class Store {}
+```
+
+This is the store. Then you need to add actions to this store by registering modules which have actions. You can create a module with actions by using `@action` decorator.
+
+```js
+const { action } = require('evex')
+
+const CREATE_USER = 'action/CREATE_USER'
+
+class UserModule {
+  @action [CREATE_USER] (store, event) {
+    store.user = { name: event.detail }
+  }
+}
+```
+
+`UserModule` don't need to be a capsid component. Then finally you register the module to the store.
+
+```js
+@component
+@store({ modules: [
+  UserModule
+] })
+class Store {}
+```
+
+Then this store can handle `CREATE_USER` DOM event. For example, your component which emits CREATE_ACTION event invokes the `CREATE_USER` action on UserModule.
 
 # Examples
 
