@@ -7,7 +7,9 @@
     "clean": "rimraf dist",
     "test": "kocha --require babel-register --require ./src/__tests__/helper src/__tests__/*.js",
     "cov": "nyc --reporter=lcov --reporter=text-summary npm test",
-    "dist": "bili --format umd src/index.js"
+    "dist": "bili --format umd src/index.js",
+    "lint": "standard",
+    "fix": "standard --fix"
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,7 @@
   },
   "homepage": "https://github.com/capsidjs/evex#readme",
   "devDependencies": {
+    "babel-eslint": "^8.0.3",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "babel-register": "^6.26.0",
@@ -38,6 +41,10 @@
     "genel": "^1.1.1",
     "kocha": "^1.9.0",
     "nyc": "^11.3.0",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "standard": "^10.0.3"
+  },
+  "standard": {
+    "parser": "babel-eslint"
   }
 }

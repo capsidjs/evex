@@ -1,4 +1,3 @@
-const handleAction = ':store:handle:action'
 /**
  * @param {Object} actionMap
  * @param {Functio} cls
@@ -8,7 +7,7 @@ const store = ({ modules }) => cls => {
     constructor () {
       super()
 
-      this.modules = modules.map(Module => new Module)
+      this.modules = modules.map(Module => new Module())
     }
     __init__ () {
       if (typeof super.__init__ === 'function') {
@@ -16,7 +15,6 @@ const store = ({ modules }) => cls => {
       }
 
       this[store.bindEventHandlers](this.el)
-
     }
 
     [store.bindEventHandlers] (el) {
@@ -43,7 +41,7 @@ const store = ({ modules }) => cls => {
 }
 
 store.bindEventHandlers = ':store:bind:event:handlers'
-store.getActionTypes= ':store:get:action:types'
+store.getActionTypes = ':store:get:action:types'
 store.handleAction = ':store:handle:action'
 
 export default store

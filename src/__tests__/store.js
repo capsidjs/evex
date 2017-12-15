@@ -10,7 +10,7 @@ describe('@store', () => {
       @action bar () {}
     }
 
-    class Module1{
+    class Module1 {
       @action foo (store, { detail }) {
         expect(store).to.be.instanceof(Store)
         expect(detail).to.equal('baz')
