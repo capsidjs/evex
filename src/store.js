@@ -11,6 +11,23 @@ const store = (opts = {}) => {
   return cls => decorateStore(cls, opts.modules || [])
 }
 
+class Triple {
+  constructor (module, type, key) {
+    this.module = module
+    this.type = type
+    this.key = key
+  }
+
+  exec (store, action) {
+    try {
+      this.module[this.key](store, action)
+    } catch (e) {
+      console.log(`action execution failed: ${this.type}`)
+      console.log(e)
+    }
+  }
+}
+
 /**
  * @param {Functio} cls
  * @param {Function[]} modules
@@ -22,6 +39,26 @@ const decorateStore = (cls, modules) => {
 
       this.modules = modules.map(Module => new Module())
       this.modules.unshift(this) // Store itself works as a module
+
+      this.triples = [].concat.apply([], this.modules.map(module => {
+        const actions = module.constructor.actions
+
+        if (!actions) {
+          return []
+        }
+
+        return Object.keys(actions).map(type => new Triple(
+          module,
+          type,
+          actions[type]
+        ))
+      }))
+
+      this.tripleMap = {}
+
+      this.triples.forEach(triple => {
+        this.tripleMap[triple.type] = triple
+      })
     }
 
     __init__ () {
@@ -33,35 +70,24 @@ const decorateStore = (cls, modules) => {
     }
 
     [store.bindEventHandlers] (el) {
-      this[store.getActionTypes]().forEach(type => {
-        el.addEventListener(type, e => this[store.handleAction](e))
+      this.triples.forEach(triple => {
+        el.addEventListener(triple.type, e => this[store.handleAction](e))
       })
     }
 
-    [store.getActionTypes] () {
-      return [].concat.apply([], modules.map(Module => Module.actions)).filter(Boolean)
-    }
+    [store.handleAction] (action) {
+      const triple = this.tripleMap[action.type]
 
-    [store.handleAction] ({ type, detail }) {
-      this.modules.some(module => {
-        if (module[type]) {
-          // Calls action
-          try {
-            module[type](this, { type, detail })
-          } catch (e) {
-            console.log(`action execution failed: ${type}`)
-            console.log(e)
-          }
-
-          return true
-        }
-      })
+      if (triple) {
+        triple.exec(this, action)
+      } else {
+        throw new Error(`No such action type: ${action.type}`)
+      }
     }
   }
 }
 
 store.bindEventHandlers = ':store:bind:event:handlers'
-store.getActionTypes = ':store:get:action:types'
 store.handleAction = ':store:handle:action'
 
 export default store

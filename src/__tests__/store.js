@@ -7,11 +7,11 @@ import genel from 'genel'
 describe('@store', () => {
   it('decorates the class to add event handlers to .el property the event handler and it reacts to the given action types', done => {
     class Module0 {
-      @action bar () {}
+      @action('bar') bar () {}
     }
 
     class Module1 {
-      @action foo (store, { detail }) {
+      @action('foo') foo (store, { detail }) {
         expect(store).to.be.instanceof(Store)
         expect(detail).to.equal('baz')
         done()
@@ -28,7 +28,7 @@ describe('@store', () => {
   context('when the store has __init__ method', () => {
     it('calls the original __init__ method', done => {
       class Module {
-        @action foo () {}
+        @action('foo') foo () {}
       }
 
       @component

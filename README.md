@@ -140,7 +140,8 @@ const CREATE_USER = 'action/CREATE_USER'
 @store
 @component
 class Store {
-  @action [CREATE_USER] (store, event) {
+  @action(CREATE_USER)
+  createUser (store, event) {
     store.user = { name: event.detail }
   }
 }
@@ -174,7 +175,8 @@ You can additionally specify modules. The action in module classes works as the 
 
 ```js
 class Module {
-  @action foo (store, action) {
+  @action('foo')
+  foo (store, action) {
     // do some action
   }
 }
@@ -190,7 +192,8 @@ class Store { ... }
 ```js
 @store
 class Store {
-  @action foo (store, action) {
+  @action('foo')
+  foo (store, action) {
   }
 }
 ```
@@ -199,7 +202,8 @@ class Store {
 
 ```js
 class Module {
-  @action bar (store, action) {
+  @action('bar')
+  bar (store, action) {
   }
 }
 
@@ -216,7 +220,8 @@ class Store {
 ```js
 class Module {
   @dispatches('bar')
-  @action foo (store, action) {
+  @action('foo')
+  foo (store, action) {
     // do some action
     // after that 'bar' action will be dispatched
   }
