@@ -42,4 +42,15 @@ describe('@store', () => {
       mount(Store, genel.div``)
     })
   })
+
+  context('when options are empty', () => {
+    it('can work normally', () => {
+      @component
+      @store()
+      class Store {
+      }
+
+      mount(Store, genel.div``)
+    })
+  })
 })
