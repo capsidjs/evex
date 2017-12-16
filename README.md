@@ -1,4 +1,4 @@
-# Evex v0.1.0
+# Evex v1.0.0
 
 [![Build Status](https://travis-ci.org/capsidjs/evex.svg?branch=master)](https://travis-ci.org/capsidjs/evex)
 [![codecov](https://codecov.io/gh/capsidjs/evex/branch/master/graph/badge.svg)](https://codecov.io/gh/capsidjs/evex)
