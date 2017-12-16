@@ -116,7 +116,7 @@ In this example, `Store` implements two actions `increment` and `decrement` and 
 
 ## Usage
 
-First create the store with `@store` decorator`. The store store need to be a capsid component as well.
+First create the store with `@store` decorator`. The store needs to be a capsid component as well.
 
 ```js
 const { component } = require('capsid')
@@ -127,31 +127,99 @@ const { store } = require('evex')
 class Store {}
 ```
 
-This is the store. Then you need to add actions to this store by registering modules which have actions. You can create a module with actions by using `@action` decorator.
+This is the store. Then you need to add actions to this store by adding `@action` decorator to methods.
 
 ```js
-const { action } = require('evex')
+const { component } = require('capsid')
+const { action, store } = require('evex')
 
 const CREATE_USER = 'action/CREATE_USER'
 
-class UserModule {
+@component
+@store
+class Store {
   @action [CREATE_USER] (store, event) {
     store.user = { name: event.detail }
   }
 }
 ```
 
-`UserModule` don't need to be a capsid component. Then finally you register the module to the store.
+Then this store can handle `action/CREATE_USER` DOM event. For example, your component which emits CREATE_ACTION event invokes the `CREATE_USER` action on UserModule.
+
+## APIs
+
+### `@store` decorator
+
+- @param {Function[]} opts.modules
+
+This creates the store class. Store class needs to be a capsid component.
 
 ```js
+const { component } = require('capsid')
+const { store } = require('evex')
+
+@store
 @component
-@store({ modules: [
-  UserModule
-] })
-class Store {}
+class MyStore {
+}
 ```
 
-Then this store can handle `CREATE_USER` DOM event. For example, your component which emits CREATE_ACTION event invokes the `CREATE_USER` action on UserModule.
+```html
+<div class="my-store"></div>
+```
+
+You can additionally specify modules. The action in module classes works as the action of the store.
+
+```js
+class Module {
+  @action foo (store, action) {
+    // do some action
+  }
+}
+
+@store({ modules: [Module] })
+class Store { ... }
+```
+
+### `@action` decorator
+
+`@action` decorator registers the method as an action.
+
+```js
+@store
+class Store {
+  @action foo (store, action) {
+  }
+}
+```
+
+`@action` decorator can work both on Store and Module.
+
+```js
+class Module {
+  @action bar (store, action) {
+  }
+}
+
+@store({ modules: [Module] })
+class Store {
+  ...
+}
+```
+
+### `@dispatches` decorator
+
+`@dispatches` decorator adds dispatching of the action at the end of the action. If action returned the promise, then it dispatches after it resolved. The detail of the dispatched action object is returned value or resolved value.
+
+```js
+class Module {
+  @dispatches('bar')
+  @action foo (store, action) {
+    // do some action
+    // after that 'bar' action will be dispatched
+  }
+}
+```
 
 # Examples
 

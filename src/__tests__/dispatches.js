@@ -1,6 +1,6 @@
-import { describe, it } from 'kocha'
+import { describe, it, context } from 'kocha'
 import { store, action, dispatches } from '../'
-import { mount } from 'capsid'
+import { component, mount } from 'capsid'
 import genel from 'genel'
 import { expect } from 'chai'
 
@@ -41,5 +41,28 @@ describe('dispatches', () => {
     class Store {}
 
     mount(Store, genel.div``).el.dispatchEvent(new CustomEvent('foo'))
+  })
+
+  context('when dispatched method throws', () => {
+    it('does not be affected', () => {
+      @store
+      @component
+      class Store {
+        @dispatches('bar')
+        @action foo () {
+          return 42
+        }
+
+        @action bar () {
+          throw new Error('bar error')
+        }
+      }
+
+      const s = mount(Store, genel.div``)
+
+      const returned = s.foo(s, {})
+
+      expect(returned).to.equal(42)
+    })
   })
 })

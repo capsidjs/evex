@@ -1,14 +1,29 @@
 /**
- * @param {Object} actionMap
+ * @param {Object} opts
+ * @param {Function[]} opts.modules
  * @param {Functio} cls
  */
-const store = ({ modules }) => cls => {
-  return class extends cls {
+const store = (opts = {}) => {
+  if (typeof opts === 'function') {
+    return decorateStore(opts, [])
+  }
+
+  return cls => decorateStore(cls, opts.modules || [])
+}
+
+/**
+ * @param {Functio} cls
+ * @param {Function[]} modules
+ */
+const decorateStore = (cls, modules) => {
+  return class Store extends cls {
     constructor () {
       super()
 
       this.modules = modules.map(Module => new Module())
+      this.modules.unshift(this) // Store itself works as a module
     }
+
     __init__ () {
       if (typeof super.__init__ === 'function') {
         super.__init__()
