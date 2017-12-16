@@ -22,7 +22,7 @@ describe('@store', () => {
     @store({ modules: [Module0, Module1] })
     class Store {}
 
-    mount(Store, genel.div``).el.dispatchEvent(new window.CustomEvent('foo', { detail: 'baz' }))
+    mount(Store, genel.div``).el.dispatchEvent(new CustomEvent('foo', { detail: 'baz' }))
   })
 
   context('when the store has __init__ method', () => {

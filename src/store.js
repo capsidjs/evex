@@ -31,7 +31,12 @@ const store = ({ modules }) => cls => {
       this.modules.some(module => {
         if (module[type]) {
           // Calls action
-          module[type](this, { type, detail })
+          try {
+            module[type](this, { type, detail })
+          } catch (e) {
+            console.log(`action execution failed: ${type}`)
+            console.log(e)
+          }
 
           return true
         }
