@@ -110,6 +110,8 @@ In this example, `Store` implements two actions `increment` and `decrement` and 
 
 # Evex as a tool
 
+`evex` is also a tool for realize Evex pattern with [capisd.js][]. Here is the explanation about how to use it.
+
 ## :cd: Install
 
     npm install evex
