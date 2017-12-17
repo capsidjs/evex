@@ -21,6 +21,8 @@ describe('@action', () => {
         @action('foo') test0 () {}
         @action('foo') test1 () {}
       }
+
+      console.log(Class.actions)
     }).to.throw()
   })
 })

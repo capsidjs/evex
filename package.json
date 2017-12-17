@@ -47,6 +47,9 @@
     "standard": "^10.0.3"
   },
   "standard": {
-    "parser": "babel-eslint"
+    "parser": "babel-eslint",
+    "globals": [
+      "CustomEvent"
+    ]
   }
 }
