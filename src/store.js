@@ -18,9 +18,9 @@ class Triple {
     this.key = key
   }
 
-  exec (store, action) {
+  exec (action) {
     try {
-      this.module[this.key](store, action)
+      this.module[this.key](this.module[store.key], action)
     } catch (e) {
       console.log(`action execution failed: ${this.type}`)
       console.log(e)
@@ -42,6 +42,9 @@ const decorateStore = (cls, modules) => {
 
       this.triples = [].concat.apply([], this.modules.map(module => {
         const actions = module.constructor.actions
+
+        // Stashes the store in module at the hidden key
+        module[store.key] = this
 
         if (!actions) {
           return []
@@ -79,7 +82,7 @@ const decorateStore = (cls, modules) => {
       const triple = this.tripleMap[action.type]
 
       if (triple) {
-        triple.exec(this, action)
+        triple.exec(action)
       } else {
         throw new Error(`No such action type: ${action.type}`)
       }
@@ -87,7 +90,8 @@ const decorateStore = (cls, modules) => {
   }
 }
 
-store.bindEventHandlers = ':store:bind:event:handlers'
-store.handleAction = ':store:handle:action'
+store.bindEventHandlers = ':evex:store:bindEventHandlers'
+store.handleAction = ':evex:store:handleAction'
+store.key = ':evex:store:key'
 
 export default store
