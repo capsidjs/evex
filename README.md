@@ -129,8 +129,8 @@ First create the store with `@store` decorator`. The store needs to be a capsid 
 const { component } = require('capsid')
 const { store } = require('evex')
 
-@store
 @component
+@store
 class Store {}
 ```
 
@@ -142,8 +142,8 @@ const { action, store } = require('evex')
 
 const CREATE_USER = 'action/CREATE_USER'
 
-@store
 @component
+@store
 class Store {
   @action(CREATE_USER)
   createUser (store, event) {
@@ -166,8 +166,8 @@ This creates the store class. Store class needs to be a capsid component.
 const { component } = require('capsid')
 const { store } = require('evex')
 
-@store
 @component
+@store
 class MyStore {
 }
 ```
