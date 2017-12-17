@@ -40,7 +40,6 @@ const decorateStore = (cls, modules) => {
       this.triples = {}
 
       this.installModules([this])
-      this.installModules(modules.map(Module => new Module()))
     }
 
     /**
@@ -73,6 +72,7 @@ const decorateStore = (cls, modules) => {
         super.__init__()
       }
 
+      this.installModules(modules.map(Module => new Module()))
       this[store.bindEventHandlers](this.el)
     }
 
