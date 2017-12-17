@@ -1,4 +1,4 @@
-# Evex v1.1.0
+# Evex v1.2.0
 
 [![Build Status](https://travis-ci.org/capsidjs/evex.svg?branch=master)](https://travis-ci.org/capsidjs/evex)
 [![codecov](https://codecov.io/gh/capsidjs/evex/branch/master/graph/badge.svg)](https://codecov.io/gh/capsidjs/evex)
@@ -107,6 +107,11 @@ class Label {
 See [the working example](https://codepen.io/kt3k/pen/JOxZJb) in codepen.io.
 
 In this example, `Store` implements two actions `increment` and `decrement` and it publishes `update` event to its descendant nodes that have `store-observer` class. In this example, having `store-observer` means the subscription to the store state.
+
+## Examples
+
+- [capsidjs/todomvc][]
+  - [TodoMVC][] implementation in Evex and capsid.js.
 
 # Evex as a tool
 
@@ -228,10 +233,9 @@ class Module {
 }
 ```
 
-# Examples
+## History
 
-- [capsidjs/todomvc][]
-  - [TodoMVC][] implementation in Evex and capsid.js.
+- 2017-12-17   v1.2.0   Improve dispatches decorator.
 
 [Flux]: https://facebook.github.io/flux/
 [FSA]: https://github.com/acdlite/flux-standard-action

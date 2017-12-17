@@ -1,6 +1,6 @@
 {
   "name": "evex",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Evex is a pattern to realize the Flux design pattern by means of DOM Events",
   "main": "dist/evex.js",
   "scripts": {
