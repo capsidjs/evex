@@ -37,13 +37,18 @@ const decorateStore = (cls, modules) => {
     constructor () {
       super()
 
-      this.installModules(modules)
-    }
-
-    installModules (modules) {
       this.triples = {}
 
-      ;[this, ...modules.map(Module => new Module())].forEach(module => {
+      this.installModules([this])
+      this.installModules(modules.map(Module => new Module()))
+    }
+
+    /**
+     * Installs the given modules into the store.
+     * @param {Object[]} modules The list of modules
+     */
+    installModules (modules) {
+      modules.forEach(module => {
         // Stashes the store in module at the hidden key
         module[store.key] = this
 
