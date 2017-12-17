@@ -20,7 +20,7 @@ class Triple {
 
   exec (action) {
     try {
-      this.module[this.key](this.module[store.key], action)
+      return this.module[this.key](this.module[store.key], action)
     } catch (e) {
       console.log(`action execution failed: ${this.type}`)
       console.log(e)
@@ -82,7 +82,7 @@ const decorateStore = (cls, modules) => {
       const triple = this.tripleMap[action.type]
 
       if (triple) {
-        triple.exec(action)
+        return triple.exec(action)
       } else {
         throw new Error(`No such action type: ${action.type}`)
       }
