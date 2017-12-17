@@ -37,30 +37,29 @@ const decorateStore = (cls, modules) => {
     constructor () {
       super()
 
-      this.modules = modules.map(Module => new Module())
-      this.modules.unshift(this) // Store itself works as a module
+      this.installModules(modules)
+    }
 
-      this.triples = [].concat.apply([], this.modules.map(module => {
-        const actions = module.constructor.actions
+    installModules (modules) {
+      this.triples = {}
 
+      ;[this, ...modules.map(Module => new Module())].forEach(module => {
         // Stashes the store in module at the hidden key
         module[store.key] = this
 
+        const actions = module.constructor.actions
+
         if (!actions) {
-          return []
+          return
         }
 
-        return Object.keys(actions).map(type => new Triple(
-          module,
-          type,
-          actions[type]
-        ))
-      }))
-
-      this.tripleMap = {}
-
-      this.triples.forEach(triple => {
-        this.tripleMap[triple.type] = triple
+        Object.keys(actions).forEach(type => {
+          this.triples[type] = new Triple(
+            module,
+            type,
+            actions[type]
+          )
+        })
       })
     }
 
@@ -73,13 +72,13 @@ const decorateStore = (cls, modules) => {
     }
 
     [store.bindEventHandlers] (el) {
-      this.triples.forEach(triple => {
-        el.addEventListener(triple.type, e => this[store.handleAction](e))
+      Object.keys(this.triples).forEach(type => {
+        el.addEventListener(type, e => this[store.handleAction](e))
       })
     }
 
     [store.handleAction] (action) {
-      const triple = this.tripleMap[action.type]
+      const triple = this.triples[action.type]
 
       if (triple) {
         return triple.exec(action)
