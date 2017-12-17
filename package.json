@@ -1,6 +1,6 @@
 {
   "name": "evex",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Evex is a pattern to realize the Flux design pattern by means of DOM Events",
   "main": "dist/evex.js",
   "scripts": {
@@ -9,6 +9,7 @@
     "cov": "nyc --reporter=lcov --reporter=text-summary npm test",
     "codecov": "npm run cov && codecov",
     "dist": "bili --format umd src/index.js",
+    "prepublish": "npm run dist",
     "lint": "standard",
     "fix": "standard --fix"
   },
