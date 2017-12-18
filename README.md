@@ -235,6 +235,7 @@ class Module {
 
 ## History
 
+- 2017-12-18   v1.4.0   Add dispatch method to store.
 - 2017-12-17   v1.2.0   Improve dispatches decorator.
 
 [Flux]: https://facebook.github.io/flux/

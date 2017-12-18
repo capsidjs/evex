@@ -43,6 +43,10 @@ const decorateStore = (cls, modules) => {
       this.installModules([this])
     }
 
+    installDefaultModules () {
+      this.installModules(modules.map(Module => new Module()))
+    }
+
     /**
      * Installs the given modules into the store.
      * @param {Object[]} modules The list of modules
@@ -73,7 +77,7 @@ const decorateStore = (cls, modules) => {
         super.__init__()
       }
 
-      this.installModules(modules.map(Module => new Module()))
+      this.installDefaultModules()
       this[store.bindEventHandlers](this.el)
     }
 
@@ -81,6 +85,14 @@ const decorateStore = (cls, modules) => {
       Object.keys(this.triples).forEach(type => {
         el.addEventListener(type, e => this[store.handleAction](e))
       })
+    }
+
+    /**
+     * Dispatches the action.
+     * @param {Object} action
+     */
+    dispatch (action) {
+      return this[store.handleAction](action)
     }
 
     [store.handleAction] (action) {

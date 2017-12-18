@@ -53,4 +53,18 @@ describe('@store', () => {
       mount(Store, genel.div``)
     })
   })
+
+  describe('dispatch', () => {
+    it('dispatches the action', () => {
+      @component
+      @store
+      class Store {
+        @action('foo') foo () {
+          return 42
+        }
+      }
+
+      expect(mount(Store, genel.div``).dispatch({ type: 'foo' })).to.equal(42)
+    })
+  })
 })
