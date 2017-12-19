@@ -20,7 +20,17 @@ class Triple {
 
   exec (action) {
     try {
-      return this.module[this.key](this.module[store.key], action)
+      const result = this.module[this.key](this.module[store.key], action)
+
+      if (typeof result.catch === 'function') {
+        result.catch(e => {
+          console.log(`action execution failed: ${this.type}`)
+          console.log(e.message)
+          console.log(e.stack)
+        })
+      }
+
+      return result
     } catch (e) {
       console.log(`action execution failed: ${this.type}`)
       throw e
