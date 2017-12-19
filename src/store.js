@@ -22,7 +22,7 @@ class Triple {
     try {
       const result = this.module[this.key](this.module[store.key], action)
 
-      if (typeof result.catch === 'function') {
+      if (result && typeof result.catch === 'function') {
         result.catch(e => {
           console.log(`action execution failed: ${this.type}`)
           console.log(e.message)
