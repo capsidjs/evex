@@ -43,8 +43,8 @@ describe('dispatches', () => {
     mount(Store, genel.div``).el.dispatchEvent(new CustomEvent('foo'))
   })
 
-  context('when dispached action type does not exist', () => {
-    it('throws', () => {
+  context('when dispatched action type does not exist', () => {
+    it('does not throws', () => {
       @store
       class Store {
         @dispatches('bar')
@@ -54,7 +54,7 @@ describe('dispatches', () => {
       const str = mount(Store, genel.div``)
       expect(() => {
         str.foo(str, {})
-      }).to.throw()
+      }).to.not.throw()
     })
   })
 

@@ -23,8 +23,7 @@ class Triple {
       return this.module[this.key](this.module[store.key], action)
     } catch (e) {
       console.log(`action execution failed: ${this.type}`)
-      console.log(e.message)
-      console.log(e)
+      throw e
     }
   }
 }
@@ -101,7 +100,7 @@ const decorateStore = (cls, modules) => {
       if (triple) {
         return triple.exec(action)
       } else {
-        throw new Error(`No such action type: ${action.type}`)
+        console.log(`No such action type: ${action.type}`)
       }
     }
   }

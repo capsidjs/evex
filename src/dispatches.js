@@ -10,11 +10,20 @@ export default type => (target, key, descriptor) => {
     const str = this[store.key]
 
     if (returned && typeof returned.then === 'function') {
-      returned.then(resolved => str[store.handleAction]({ type, detail: resolved }))
+      returned.then(resolved => dispatch(str, type, resolved ))
     } else {
-      str[store.handleAction]({ type, detail: returned })
+      dispatch(str, type, returned)
     }
 
     return returned
+  }
+}
+
+const dispatch = (store, type, detail) => {
+  try {
+    store.dispatch({ type, detail })
+  } catch (e) {
+    console.log(e.message)
+    console.log(e)
   }
 }
