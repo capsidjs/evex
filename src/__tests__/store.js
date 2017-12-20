@@ -3,6 +3,7 @@ import { describe, it, context } from 'kocha'
 import { action, store } from '../'
 import { component, mount } from 'capsid'
 import genel from 'genel'
+import td from 'testdouble'
 
 describe('@store', () => {
   it('decorates the class to add event handlers to .el property the event handler and it reacts to the given action types', done => {
@@ -65,6 +66,27 @@ describe('@store', () => {
       }
 
       expect(mount(Store, genel.div``).dispatch({ type: 'foo' })).to.equal(42)
+    })
+
+    context('when dispatched action returns rejected promise', () => {
+      it('shows error in console', () => {
+        @component
+        @store
+        class Store {
+          @action('foo') foo () {
+            return Promise.reject(new Error())
+          }
+        }
+
+        td.replace(console, 'log')
+
+        const result = mount(Store, genel.div``).dispatch({ type: 'foo' })
+
+        result.catch(e => {
+          td.verify(console.log('action execution failed: foo'))
+          td.reset()
+        })
+      })
     })
   })
 })
