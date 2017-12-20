@@ -16,9 +16,11 @@ class Triple {
     this.module = module
     this.type = type
     this.key = key
+    this.handlers = []
   }
 
   exec (action) {
+    this.execHandlers(action)
     try {
       const result = this.module[this.key](this.module[store.key], action)
 
@@ -35,6 +37,22 @@ class Triple {
       console.log(`action execution failed: ${this.type}`)
       throw e
     }
+  }
+
+  addHandler (handler) {
+    this.handlers.push(handler)
+  }
+
+  execHandlers (action) {
+    this.handlers.forEach(handler => {
+      try {
+        handler(action)
+      } catch (e) {
+        console.log(`action handler execution failed: type=${this.type}`)
+        console.log(e.message)
+        console.log(e.stack)
+      }
+    })
   }
 }
 
@@ -92,7 +110,7 @@ const decorateStore = (cls, modules) => {
 
     [store.bindEventHandlers] (el) {
       Object.keys(this.triples).forEach(type => {
-        el.addEventListener(type, e => this[store.handleAction](e))
+        el.addEventListener(type, e => this.dispatch(e))
       })
     }
 
@@ -101,10 +119,6 @@ const decorateStore = (cls, modules) => {
      * @param {Object} action
      */
     dispatch (action) {
-      return this[store.handleAction](action)
-    }
-
-    [store.handleAction] (action) {
       const triple = this.triples[action.type]
 
       if (triple) {
@@ -113,11 +127,17 @@ const decorateStore = (cls, modules) => {
         console.log(`No such action type: ${action.type}`)
       }
     }
+
+    /**
+     * Adds the handler of action type.
+     */
+    on (type, handler) {
+      this.triples[type].addHandler(handler)
+    }
   }
 }
 
 store.bindEventHandlers = ':evex:store:bindEventHandlers'
-store.handleAction = ':evex:store:handleAction'
 store.key = ':evex:store:key'
 
 export default store

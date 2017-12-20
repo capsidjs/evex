@@ -89,4 +89,49 @@ describe('@store', () => {
       })
     })
   })
+
+  describe('on', () => {
+    it('appends additional action handler to the given action type', done => {
+      @component
+      @store
+      class Store {
+        @action('foo') foo () {
+        }
+      }
+
+      const s = mount(Store, genel.div``)
+
+      s.on('foo', ({ detail }) => {
+        expect(detail).to.equal(42)
+        done()
+      })
+
+      s.dispatch({ type: 'foo', detail: 42 })
+    })
+
+    context('when handler throws', () => {
+      it('shows error log in console', () => {
+        @component
+        @store
+        class Store {
+          @action('foo') foo () {
+          }
+        }
+
+        const s = mount(Store, genel.div``)
+
+        s.on('foo', ({ detail }) => {
+          expect(detail).to.equal(42)
+          throw new Error('abc')
+        })
+
+        td.replace(console, 'log')
+
+        s.dispatch({ type: 'foo', detail: 42 })
+
+        td.verify(console.log('action handler execution failed: type=foo'))
+        td.reset()
+      })
+    })
+  })
 })
