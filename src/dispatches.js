@@ -27,7 +27,7 @@ const dispatch = (store, type, detail) => {
       debugMessage({
         type: 'event',
         coelem: store,
-        color: 'indianred',
+        color: '#addb0e',
         e: { type },
         module: '🎧'
       })
