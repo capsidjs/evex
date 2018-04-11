@@ -51,7 +51,9 @@
   "standard": {
     "parser": "babel-eslint",
     "globals": [
-      "CustomEvent"
+      "CustomEvent",
+      "__DEV__",
+      "capsidDebugMessage"
     ]
   }
 }

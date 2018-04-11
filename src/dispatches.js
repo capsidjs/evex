@@ -1,4 +1,5 @@
 import store from './store'
+import debugMessage from './debug-message'
 
 export default type => (target, key, descriptor) => {
   const method = descriptor.value
@@ -10,7 +11,7 @@ export default type => (target, key, descriptor) => {
     const str = this[store.key]
 
     if (returned && typeof returned.then === 'function') {
-      returned.then(resolved => dispatch(str, type, resolved ))
+      returned.then(resolved => dispatch(str, type, resolved))
     } else {
       dispatch(str, type, returned)
     }
@@ -22,8 +23,19 @@ export default type => (target, key, descriptor) => {
 const dispatch = (store, type, detail) => {
   try {
     store.dispatch({ type, detail })
+    if (__DEV__) {
+      debugMessage({
+        type: 'event',
+        coelem: store,
+        color: 'indianred',
+        e: { type },
+        module: '🎧'
+      })
+    }
   } catch (e) {
-    console.log(e.message)
-    console.log(e)
+    if (__DEV__) {
+      console.log(e.message)
+      console.log(e)
+    }
   }
 }
