@@ -1,7 +1,7 @@
 # Evex v1.6.1
 
 [![Build Status](https://travis-ci.org/capsidjs/evex.svg?branch=master)](https://travis-ci.org/capsidjs/evex)
-[![codecov](https://codecov.io/gh/capsidjs/evex/branch/master/graph/badge.svg)](https://codecov.io/gh/capsidjs/evex)
+[![codecov](https://codecov.io/gh/capsidjs/evex/branch/master/graph/badge.svg)](https://codecov.io/gh/capsidjs/evex) [![Greenkeeper badge](https://badges.greenkeeper.io/capsidjs/evex.svg)](https://greenkeeper.io/)
 
 Evex is a pattern to realize the [Flux][] design pattern by means of [DOM Events][].
 
