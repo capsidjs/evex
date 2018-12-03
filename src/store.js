@@ -3,12 +3,8 @@
  * @param {Function[]} opts.modules
  * @param {Functio} cls
  */
-const store = (opts = {}) => {
-  if (typeof opts === 'function') {
-    return decorateStore(opts, [])
-  }
-
-  return cls => decorateStore(cls, opts.modules || [])
+const store = (opts = {}) => descriptor => {
+  descriptor.finisher = constructor => decorateStore(constructor, opts.modules || [])
 }
 
 class Triple {
@@ -99,9 +95,9 @@ const decorateStore = (cls, modules) => {
       })
     }
 
-    __init__ () {
-      if (typeof super.__init__ === 'function') {
-        super.__init__()
+    __mount__ () {
+      if (typeof super.__mount__ === 'function') {
+        super.__mount__()
       }
 
       this.installDefaultModules()

@@ -2,8 +2,14 @@
   "env": {
     "test": {
       "plugins": [
-        "transform-es2015-modules-commonjs",
-        "transform-decorators-legacy"
+        "@babel/plugin-transform-modules-commonjs",
+        [
+          "@babel/plugin-proposal-decorators",
+          {
+            "decoratorsBeforeExport": false
+          }
+        ],
+        "@babel/plugin-proposal-class-properties"
       ]
     }
   }

@@ -1,10 +1,11 @@
 import store from './store'
 import debugMessage from './debug-message'
 
-export default type => (target, key, descriptor) => {
-  const method = descriptor.value
+export default type => descriptor => {
+  const d = descriptor.descriptor
+  const method = d.value
 
-  descriptor.value = function () {
+  d.value = function () {
     const returned = method.apply(this, arguments)
 
     // Retrieves stashed store in module instance

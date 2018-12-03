@@ -45,7 +45,7 @@ describe('dispatches', () => {
 
   context('when dispatched action type does not exist', () => {
     it('does not throws', () => {
-      @store
+      @store()
       class Store {
         @dispatches('bar')
         @action('foo') foo () {}
@@ -60,8 +60,8 @@ describe('dispatches', () => {
 
   context('when dispatched method throws', () => {
     it('does not be affected', () => {
-      @store
-      @component
+      @store()
+      @component('store')
       class Store {
         @dispatches('bar')
         @action('foo') foo () {

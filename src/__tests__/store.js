@@ -19,23 +19,23 @@ describe('@store', () => {
       }
     }
 
-    @component
+    @component('store')
     @store({ modules: [Module0, Module1] })
     class Store {}
 
     mount(Store, genel.div``).el.dispatchEvent(new CustomEvent('foo', { detail: 'baz' }))
   })
 
-  context('when the store has __init__ method', () => {
-    it('calls the original __init__ method', done => {
+  context('when the store has __mount__ method', () => {
+    it('calls the original __mount__ method', done => {
       class Module {
         @action('foo') foo () {}
       }
 
-      @component
+      @component('store')
       @store({ modules: [Module] })
       class Store {
-        __init__ () {
+        __mount__ () {
           done()
         }
       }
@@ -46,7 +46,7 @@ describe('@store', () => {
 
   context('when options are empty', () => {
     it('can work normally', () => {
-      @component
+      @component('store')
       @store()
       class Store {
       }
@@ -57,8 +57,8 @@ describe('@store', () => {
 
   describe('dispatch', () => {
     it('dispatches the action', () => {
-      @component
-      @store
+      @component('store')
+      @store()
       class Store {
         @action('foo') foo () {
           return 42
@@ -70,8 +70,8 @@ describe('@store', () => {
 
     context('when dispatched action returns rejected promise', () => {
       it('shows error in console', () => {
-        @component
-        @store
+        @component('store')
+        @store()
         class Store {
           @action('foo') foo () {
             return Promise.reject(new Error())
@@ -92,8 +92,8 @@ describe('@store', () => {
 
   describe('on', () => {
     it('appends additional action handler to the given action type', done => {
-      @component
-      @store
+      @component('store')
+      @store()
       class Store {
         @action('foo') foo () {
         }
@@ -111,8 +111,8 @@ describe('@store', () => {
 
     context('when handler throws', () => {
       it('shows error log in console', () => {
-        @component
-        @store
+        @component('store')
+        @store()
         class Store {
           @action('foo') foo () {
           }
