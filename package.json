@@ -64,5 +64,10 @@
       "__DEV__",
       "capsidDebugMessage"
     ]
+  },
+  "greenkeeper": {
+    "ignore": [
+      "bili"
+    ]
   }
 }
