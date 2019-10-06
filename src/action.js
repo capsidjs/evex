@@ -9,7 +9,7 @@ export default type => descriptor => {
     const actions = constructor.actions = constructor.actions || {}
 
     if (typeof type !== 'string') {
-      throw new Error(`action type must be a string: typeof the give type was ${typeof type}`)
+      throw new Error(`action type must be a string: typeof the give type was ${typeof type} method=${key}`)
     }
 
     if (actions[type]) {
