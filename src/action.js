@@ -8,6 +8,10 @@ export default type => descriptor => {
   descriptor.finisher = constructor => {
     const actions = constructor.actions = constructor.actions || {}
 
+    if (typeof type !== 'string') {
+      throw new Error(`action type must be a string: typeof the give type was ${typeof type}`)
+    }
+
     if (actions[type]) {
       throw new Error('actions of the same type are registered more than twice')
     }
